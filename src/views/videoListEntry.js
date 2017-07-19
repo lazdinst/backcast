@@ -2,7 +2,7 @@ var VideoListEntryView = Backbone.View.extend({
 
   initialize: function() {
  
-    this.model.on('change', this.render, this);
+  //this.model.on('change', this.render, this);
   },
   
   events: {
@@ -15,8 +15,12 @@ var VideoListEntryView = Backbone.View.extend({
 
   //Original Below
   render: function() {
-    this.$el.html(this.template(this.model.attributes));
-    return this.el;
+    if (this.model) {
+      this.$el.html(this.template(this.model.attributes));
+      return this.el;
+    } else {
+      this.$el.html('<div class="loading">Please wait...</div>');
+    }
   },
   
   //Original Below

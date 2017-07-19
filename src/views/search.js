@@ -1,9 +1,13 @@
 var SearchView = Backbone.View.extend({
-
-  el: '.search',
-
-  initialize: function() {
-    this.render();
+  
+  events: {
+    'click button' : 'handleSearchButton'
+    //enter is pressed
+  },
+  
+  handleSearchButton: function() {
+    var q = this.$('.form-control').val();
+    this.collection.search(q);
   },
 
   render: function() {

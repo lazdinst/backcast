@@ -2,7 +2,7 @@ var VideoListView = Backbone.View.extend({
   
   initialize: function() {
     //This Initialized tag is janky, need to find more appropriate solution
-    this.collection.on('sync', this.render, this);
+    this.listenTo(this.collection, 'sync', this.render);
   },
 
   renderVideo: function(videos) {

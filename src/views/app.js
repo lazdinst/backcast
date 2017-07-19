@@ -3,9 +3,17 @@ var AppView = Backbone.View.extend({
   el: '#app',
 
   initialize: function() {
-    this.videos = new Videos(window.exampleVideoData);
+    this.videos = new Videos();
+    this.listenTo(this.videos, 'sync', this.selectFirst);
+    this.videos.search('rick astley');
     this.render();
-    
+  },
+
+
+  selectFirst: function() {
+    if (this.videos.length > 0) {
+      this.videos.at(0).select();
+    }
   },
 
   render: function() {
@@ -32,13 +40,14 @@ var AppView = Backbone.View.extend({
 
     //Render Search View
     //this.$el.html(this.template());
-    var searchView = new SearchView( /*- What am I passing? Object of Attributes? -*/ );
+    var searchView = new SearchView({
+      collection: this.videos,
+      el: this.$('.search')
+    }).render();
 
     return this;
   },
 
   template: templateURL('src/templates/app.html'),
-  videoPlayertemplate: templateURL('src/templates/videoPlayer.html'),
-  videoListViewTemplate: templateURL('src/templates/videoList.html')
 
 });
